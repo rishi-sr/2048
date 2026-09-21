@@ -1,27 +1,33 @@
-// Animations for 2048 Desert Edition
+// Cyberpunk / Neon Grid Keyframe Animations
 
+// 1. Tile Spawn: scale(0.7) opacity(0) -> scale(1.08) + neon flash -> scale(1)
 @keyframes tileSpawn {
   0% {
     opacity: 0;
-    transform: scale(0);
+    transform: scale(0.7);
+    filter: brightness(1.6) drop-shadow(0 0 12px rgba(0, 245, 255, 0.8));
   }
   65% {
     opacity: 1;
-    transform: scale(1.12);
+    transform: scale(1.08);
+    filter: brightness(1.2) drop-shadow(0 0 8px rgba(0, 245, 255, 0.5));
   }
   100% {
     opacity: 1;
     transform: scale(1);
+    filter: brightness(1) drop-shadow(0 0 0px transparent);
   }
 }
 
+// 2. Tile Merge: scale(1) -> scale(1.18) with bright edge flash & glow burst -> scale(1)
 @keyframes tileMerge {
   0% {
     transform: scale(1);
+    filter: brightness(1);
   }
   45% {
     transform: scale(1.18);
-    filter: brightness(1.12);
+    filter: brightness(1.35) drop-shadow(0 0 16px rgba(0, 245, 255, 0.75));
   }
   100% {
     transform: scale(1);
@@ -29,7 +35,26 @@
   }
 }
 
-@keyframes goldShine {
+// 3. 2048 Milestone Core Pulse
+@keyframes neonPulse2048 {
+  0%, 100% {
+    box-shadow: 
+      0 4px 0 #050810,
+      0 0 14px rgba(0, 245, 255, 0.4),
+      0 0 28px rgba(139, 92, 255, 0.25),
+      inset 0 1px 1px rgba(255, 255, 255, 0.6);
+  }
+  50% {
+    box-shadow: 
+      0 4px 0 #050810,
+      0 0 22px rgba(0, 245, 255, 0.65),
+      0 0 40px rgba(139, 92, 255, 0.45),
+      inset 0 1px 1px rgba(255, 255, 255, 0.85);
+  }
+}
+
+// 4. Holographic Shine Sweep
+@keyframes holoShine {
   0% {
     background-position: -200% 0;
   }
@@ -38,17 +63,20 @@
   }
 }
 
+// 5. Score Float Popup
 @keyframes scoreFloat {
   0% {
     opacity: 0;
     transform: translateY(0) scale(0.85);
+    filter: drop-shadow(0 0 4px rgba(0, 245, 255, 0.8));
   }
   20% {
     opacity: 1;
-    transform: translateY(-8px) scale(1.08);
+    transform: translateY(-8px) scale(1.06);
+    filter: drop-shadow(0 0 8px rgba(0, 245, 255, 0.9));
   }
   75% {
-    opacity: 0.9;
+    opacity: 0.95;
     transform: translateY(-24px) scale(1);
   }
   100% {
@@ -57,6 +85,7 @@
   }
 }
 
+// 6. HUD Modal Overlay Fade-In
 @keyframes overlayFadeIn {
   0% {
     opacity: 0;
@@ -68,15 +97,33 @@
   }
 }
 
+// 7. System Indicator Pulse (for live HUD status dot)
+@keyframes hudLiveDot {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+    box-shadow: 0 0 6px rgba(0, 245, 255, 0.8);
+  }
+  50% {
+    opacity: 0.5;
+    transform: scale(0.85);
+    box-shadow: 0 0 2px rgba(0, 245, 255, 0.3);
+  }
+}
+
+// 8. Subtle HUD Swipe Hint
 @keyframes subtleSwipeHint {
   0%, 100% {
     transform: translateX(0);
+    opacity: 0.7;
   }
   25% {
-    transform: translateX(-6px);
+    transform: translateX(-5px);
+    opacity: 1;
   }
   75% {
-    transform: translateX(6px);
+    transform: translateX(5px);
+    opacity: 1;
   }
 }
 

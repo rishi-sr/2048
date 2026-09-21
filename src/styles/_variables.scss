@@ -1,38 +1,60 @@
-// Desert Luxury Theme Color Palette
-$sand-deep: #B88952;
-$sand: #D7B078;
-$sand-light: #E8C995;
-$sand-highlight: #F4DDB5;
-$sand-pale: #FBF4E6;
+// Cyberpunk / Futuristic Neon Color System
 
-$dark: #292018;
-$dark-soft: #51402F;
-$dark-muted: #79614B;
+// 1. Dark Base Palette
+$bg-primary: #05060A;
+$bg-secondary: #0A0D16;
+$surface: #101522;
+$surface-glass: rgba(16, 21, 34, 0.82);
 
-$board-bg: #3E2F23;
-$board-socket: #33261C;
-$board-border: #523E2E;
+$dark: #05060A;
+$dark-surface: #0B0F18;
+$dark-board: #0E131F;
+$board-bg: #0C111D;
+$board-socket: #060911;
+$board-border: rgba(0, 245, 255, 0.26);
 
-$tile-light: #F4DEB5;
-$tile-dark: #6A4325;
+// 2. High-Tech Neon Accents (Dominant: Cyan & Electric Blue; Secondary: Purple & Magenta)
+$neon-cyan: #00F5FF;
+$neon-cyan-dim: #00B4BD;
+$electric-blue: #2979FF;
+$electric-blue-glow: #1A5BD6;
+$neon-purple: #8B5CFF;
+$neon-magenta: #FF2BD6;
+$neon-pink: #FF1493;
 
-$text-dark: #30251B;
-$text-light: #FFF8EA;
-$text-gold: #FFDF94;
-$text-muted: #A89078;
+// 3. High-Contrast Cyberpunk Typography Colors
+$text-primary: #F4FBFF;
+$text-secondary: #8EA3B8;
+$text-muted: #546678;
+$text-cyan: #67FFFF;
+$text-purple: #D5BFFF;
+$text-gold: #FFE27A;
 
-// Fonts
-$font-primary: 'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-$font-num: 'Manrope', 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
+// 4. Futuristic Fonts
+$font-hud: 'Orbitron', 'Rajdhani', -apple-system, sans-serif;
+$font-label: 'Rajdhani', 'Orbitron', -apple-system, sans-serif;
+$font-num: 'Space Grotesk', 'Rajdhani', sans-serif;
+$font-primary: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
 
-// Shadows & 3D Lighting
-$shadow-sand-ambient: 0 12px 32px rgba(41, 32, 24, 0.18), 0 4px 12px rgba(41, 32, 24, 0.1);
-$shadow-recessed-board: inset 0 6px 14px rgba(20, 14, 9, 0.55), inset 0 2px 4px rgba(20, 14, 9, 0.4), 0 8px 24px rgba(41, 32, 24, 0.22);
-$shadow-socket: inset 0 3px 6px rgba(16, 11, 7, 0.6), inset 0 1px 2px rgba(16, 11, 7, 0.4);
-
-// Sizing
+// 5. Dimension & Layout Tokens
 $max-mobile-width: 460px;
-$board-border-radius: 18px;
-$tile-border-radius: 10px;
-$socket-border-radius: 10px;
+$board-border-radius: 16px;
+$tile-border-radius: 9px;
+$socket-border-radius: 9px;
 $gap: 10px;
+
+// 6. Layered High-Tech Shadows & Ambient Lighting
+$shadow-board-glow: 
+  0 0 1px rgba(0, 245, 255, 0.6),
+  0 0 16px rgba(0, 245, 255, 0.12),
+  0 12px 36px rgba(0, 0, 0, 0.7);
+
+$shadow-recessed-board: 
+  inset 0 4px 14px rgba(0, 0, 0, 0.8),
+  inset 0 1px 3px rgba(0, 0, 0, 0.9),
+  0 8px 24px rgba(0, 0, 0, 0.65);
+
+$shadow-socket: 
+  inset 0 3px 6px rgba(0, 0, 0, 0.85),
+  inset 0 1px 2px rgba(0, 0, 0, 0.9),
+  0 0 1px rgba(0, 245, 255, 0.08);

@@ -1,9 +1,24 @@
 @use 'sass:color';
 @use 'variables' as *;
 
-// 3D Carved Cube styling mixin
-@mixin cube-3d($face-color, $depth-color, $text-color: $text-light, $highlight-opacity: 0.35) {
-  background: linear-gradient(180deg, color.adjust($face-color, $lightness: 4%) 0%, $face-color 100%);
+// Controlled multi-layer neon glow helper (avoids over-blurry flood)
+@mixin neon-glow($color, $intensity: 1) {
+  box-shadow: 
+    0 0 3px rgba($color, 0.6 * $intensity),
+    0 0 10px rgba($color, 0.25 * $intensity);
+}
+
+// 3D Cybernetic Number Cube Mixin
+// Implements dark metallic body, glowing beveled neon rims, 3D depth shelf, and controlled specular reflection
+@mixin cyber-cube-3d(
+  $face-gradient-top,
+  $face-gradient-bottom,
+  $neon-edge,
+  $neon-glow-color,
+  $text-color: $text-primary,
+  $depth-color: #030509
+) {
+  background: linear-gradient(180deg, $face-gradient-top 0%, $face-gradient-bottom 100%);
   color: $text-color;
   border-radius: $tile-border-radius;
   position: absolute;
@@ -12,115 +27,131 @@
   align-items: center;
   justify-content: center;
   text-align: center;
-  font-weight: 800;
-  
-  // Layered physical 3D shadows: subtle bottom shelf depth + drop shadow onto the board
+  font-weight: 700;
+  border: 1px solid rgba($neon-edge, 0.65);
+
+  // Layered physical 3D shadows + controlled neon glow halo
   box-shadow: 
     0 4px 0 $depth-color,
-    0 6px 3px rgba(18, 12, 7, 0.35),
-    0 10px 16px rgba(18, 12, 7, 0.25),
-    inset 0 1px 1px rgba(255, 255, 255, $highlight-opacity);
+    0 6px 14px rgba(0, 0, 0, 0.65),
+    0 0 10px rgba($neon-glow-color, 0.28),
+    inset 0 1px 1px rgba(255, 255, 255, 0.22);
 
-  // Top beveled highlight edge
+  // Top beveled specular edge highlight
   &::before {
     content: '';
     position: absolute;
-    top: 2px;
-    left: 4px;
-    right: 4px;
-    height: 32%;
-    background: linear-gradient(180deg, rgba(255, 255, 255, $highlight-opacity) 0%, rgba(255, 255, 255, 0.02) 100%);
-    border-radius: ($tile-border-radius - 2px) ($tile-border-radius - 2px) 4px 4px;
+    top: 1px;
+    left: 3px;
+    right: 3px;
+    height: 30%;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.35) 0%, rgba(255, 255, 255, 0.02) 100%);
+    border-radius: ($tile-border-radius - 2px) ($tile-border-radius - 2px) 3px 3px;
     pointer-events: none;
   }
 
-  // Bottom specular shelf highlight
+  // Bottom physical depth shelf / thickness edge
   &::after {
     content: '';
     position: absolute;
     bottom: 0;
     left: 0;
     right: 0;
-    height: 4px;
-    background: rgba(0, 0, 0, 0.15);
+    height: 3px;
+    background: rgba(0, 0, 0, 0.3);
     border-radius: 0 0 $tile-border-radius $tile-border-radius;
     pointer-events: none;
   }
 }
 
-// Recessed cavity effect (for empty cells and board recess)
-@mixin recessed-socket {
+// Recessed cavity socket (for empty grid positions)
+@mixin cyber-socket {
   background-color: $board-socket;
   border-radius: $socket-border-radius;
+  border: 1px solid rgba(0, 245, 255, 0.07);
   box-shadow: 
-    inset 0 3px 6px rgba(14, 9, 5, 0.65),
-    inset 0 1px 2px rgba(14, 9, 5, 0.5),
-    0 1px 0 rgba(255, 255, 255, 0.04);
+    inset 0 3px 8px rgba(0, 0, 0, 0.85),
+    inset 0 1px 2px rgba(0, 0, 0, 0.9),
+    0 0 1px rgba(0, 245, 255, 0.05);
 }
 
-// Tactile clickable button with 3D press feel
-@mixin tactile-button($bg: $sand, $depth: $sand-deep, $color: $dark) {
+// Tactile Cybernetic Arcade Button
+@mixin cyber-button(
+  $neon-accent: $neon-cyan,
+  $bg-top: #151D2D,
+  $bg-bottom: #0D131F,
+  $text-color: $text-primary
+) {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
-  background: linear-gradient(180deg, color.adjust($bg, $lightness: 5%) 0%, $bg 100%);
-  color: $color;
-  font-family: $font-primary;
+  background: linear-gradient(180deg, $bg-top 0%, $bg-bottom 100%);
+  color: $text-color;
+  font-family: $font-label;
   font-weight: 700;
   font-size: 0.95rem;
-  letter-spacing: 0.05em;
-  padding: 12px 20px;
-  border-radius: 12px;
-  border: none;
+  letter-spacing: 0.08em;
+  padding: 12px 18px;
+  border-radius: 10px;
+  border: 1px solid rgba($neon-accent, 0.55);
   cursor: pointer;
   position: relative;
   touch-action: manipulation;
   box-shadow: 
-    0 4px 0 $depth,
-    0 6px 12px rgba(25, 18, 12, 0.22),
-    inset 0 1px 1px rgba(255, 255, 255, 0.4);
-  transition: transform 80ms ease, box-shadow 80ms ease, filter 120ms ease;
+    0 3px 0 rgba(0, 0, 0, 0.8),
+    0 4px 10px rgba(0, 0, 0, 0.5),
+    0 0 8px rgba($neon-accent, 0.2),
+    inset 0 1px 1px rgba(255, 255, 255, 0.15);
+  transition: transform 90ms ease, box-shadow 90ms ease, border-color 90ms ease, filter 90ms ease;
   user-select: none;
   -webkit-tap-highlight-color: transparent;
 
+  // Subtle glass highlight reflection
   &::before {
     content: '';
     position: absolute;
-    top: 2px;
+    top: 1px;
     left: 4px;
     right: 4px;
     height: 35%;
-    background: linear-gradient(180deg, rgba(255, 255, 255, 0.4) 0%, rgba(255, 255, 255, 0) 100%);
-    border-radius: 9px 9px 3px 3px;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0.01) 100%);
+    border-radius: 7px 7px 2px 2px;
     pointer-events: none;
   }
 
   &:hover {
-    filter: brightness(1.04);
+    border-color: rgba($neon-accent, 0.9);
+    box-shadow: 
+      0 3px 0 rgba(0, 0, 0, 0.8),
+      0 5px 14px rgba(0, 0, 0, 0.6),
+      0 0 14px rgba($neon-accent, 0.35),
+      inset 0 1px 1px rgba(255, 255, 255, 0.25);
+    filter: brightness(1.08);
   }
 
   &:active {
-    transform: translateY(3px);
+    transform: scale(0.96) translateY(2px);
     box-shadow: 
-      0 1px 0 $depth,
-      0 2px 4px rgba(25, 18, 12, 0.2),
-      inset 0 1px 1px rgba(255, 255, 255, 0.3);
+      0 1px 0 rgba(0, 0, 0, 0.9),
+      0 2px 5px rgba(0, 0, 0, 0.5),
+      0 0 6px rgba($neon-accent, 0.25),
+      inset 0 1px 1px rgba(255, 255, 255, 0.1);
   }
 
   &:focus-visible {
-    outline: 2px solid $sand-highlight;
+    outline: 2px solid $neon-accent;
     outline-offset: 2px;
   }
 }
 
-// Frosted Sand glassmorphic overlay for modals
-@mixin desert-overlay {
+// Futuristic System Modal Overlay
+@mixin cyber-overlay {
   position: absolute;
   inset: 0;
-  background: rgba(38, 28, 20, 0.82);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
+  background: rgba(5, 8, 14, 0.88);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   border-radius: $board-border-radius;
   display: flex;
   flex-direction: column;
@@ -129,4 +160,24 @@
   padding: 24px;
   z-index: 50;
   text-align: center;
+  border: 1px solid rgba(0, 245, 255, 0.25);
+  box-shadow: 
+    0 0 24px rgba(0, 245, 255, 0.12),
+    inset 0 0 32px rgba(0, 0, 0, 0.85);
+
+  // Subtle digital scanline overlay
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+      0deg,
+      rgba(0, 245, 255, 0.02) 0px,
+      rgba(0, 245, 255, 0.02) 1px,
+      transparent 1px,
+      transparent 3px
+    );
+    pointer-events: none;
+    border-radius: $board-border-radius;
+  }
 }

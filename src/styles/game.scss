@@ -23,9 +23,10 @@
   touch-action: pan-y;
   user-select: none;
   -webkit-user-select: none;
+  z-index: 2; // Sits above ambient scanline layer
 }
 
-// 1. Header Section
+// 1. Futuristic HUD Header
 .game-header {
   width: 100%;
   display: flex;
@@ -40,28 +41,41 @@
   }
 
   .game-title {
-    font-family: $font-primary;
-    font-size: 2.2rem;
+    font-family: $font-hud;
+    font-size: 2.1rem;
     font-weight: 900;
     line-height: 1;
     margin: 0;
-    color: $dark;
-    letter-spacing: -0.04em;
-    text-shadow: 0 1px 1px rgba(255, 255, 255, 0.6);
+    color: $text-primary;
+    letter-spacing: -0.02em;
+    text-shadow: 
+      0 0 10px rgba(0, 245, 255, 0.45),
+      0 0 24px rgba(0, 245, 255, 0.18);
   }
 
   .game-badge {
-    font-family: $font-primary;
-    font-size: 0.68rem;
-    font-weight: 800;
-    letter-spacing: 0.18em;
-    color: $tile-dark;
-    margin-top: 3px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: $font-label;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    color: $text-cyan;
+    margin-top: 4px;
     text-transform: uppercase;
-    background: rgba(184, 137, 82, 0.22);
+    background: rgba(0, 245, 255, 0.08);
     padding: 2px 8px;
-    border-radius: 6px;
-    border: 1px solid rgba(184, 137, 82, 0.35);
+    border-radius: 4px;
+    border: 1px solid rgba(0, 245, 255, 0.3);
+
+    .badge-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background-color: $neon-cyan;
+      animation: hudLiveDot 1.8s ease-in-out infinite;
+    }
   }
 
   .sound-toggle-btn {
@@ -70,31 +84,39 @@
     justify-content: center;
     width: 42px;
     height: 42px;
-    background: linear-gradient(180deg, color.adjust($sand, $lightness: 6%) 0%, $sand 100%);
-    border: none;
-    border-radius: 12px;
-    color: $dark;
+    background: linear-gradient(180deg, #162032 0%, #0E1422 100%);
+    border: 1px solid rgba(0, 245, 255, 0.35);
+    border-radius: 10px;
+    color: $text-cyan;
     cursor: pointer;
     box-shadow: 
-      0 3px 0 $sand-deep,
-      0 4px 8px rgba(41, 32, 24, 0.16),
-      inset 0 1px 1px rgba(255, 255, 255, 0.4);
-    transition: transform 80ms ease, box-shadow 80ms ease;
+      0 2px 0 rgba(0, 0, 0, 0.8),
+      0 4px 10px rgba(0, 0, 0, 0.5),
+      0 0 8px rgba(0, 245, 255, 0.15),
+      inset 0 1px 1px rgba(255, 255, 255, 0.15);
+    transition: transform 90ms ease, box-shadow 90ms ease, border-color 90ms ease;
     -webkit-tap-highlight-color: transparent;
 
+    &:hover {
+      border-color: rgba(0, 245, 255, 0.75);
+      box-shadow: 0 0 12px rgba(0, 245, 255, 0.3);
+    }
+
     &:active {
-      transform: translateY(2px);
-      box-shadow: 0 1px 0 $sand-deep, inset 0 1px 1px rgba(255, 255, 255, 0.3);
+      transform: scale(0.95);
+      box-shadow: 0 1px 0 rgba(0, 0, 0, 0.9);
     }
 
     &.muted {
-      color: $dark-muted;
+      color: $text-muted;
+      border-color: rgba(84, 102, 120, 0.35);
+      box-shadow: 0 2px 0 rgba(0, 0, 0, 0.8);
       opacity: 0.75;
     }
   }
 }
 
-// 2. Score Section
+// 2. Futuristic Score HUD Modules
 .scoreboard-container {
   width: 100%;
   display: grid;
@@ -104,59 +126,80 @@
 
   .score-card {
     position: relative;
-    background: linear-gradient(180deg, #443428 0%, #35281E 100%);
-    border-radius: 14px;
+    background: linear-gradient(180deg, #101625 0%, #0B0F19 100%);
+    border-radius: 12px;
     padding: 8px 12px;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     box-shadow: 
-      0 3px 0 #201710,
-      0 6px 12px rgba(20, 14, 9, 0.25),
-      inset 0 1px 1px rgba(255, 255, 255, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.05);
+      0 3px 0 rgba(0, 0, 0, 0.9),
+      0 6px 14px rgba(0, 0, 0, 0.6),
+      inset 0 1px 1px rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(0, 245, 255, 0.22);
+
+    // Subtle corner notch decoration
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 6px;
+      height: 6px;
+      border-top: 2px solid $neon-cyan;
+      border-left: 2px solid $neon-cyan;
+      border-top-left-radius: 12px;
+      pointer-events: none;
+    }
+
+    &.best-score {
+      border-color: rgba(139, 92, 255, 0.25);
+      &::before {
+        border-color: $neon-purple;
+      }
+    }
 
     .score-label {
-      font-family: $font-primary;
-      font-size: 0.7rem;
-      font-weight: 800;
-      letter-spacing: 0.12em;
-      color: $sand-light;
+      font-family: $font-label;
+      font-size: 0.74rem;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      color: $text-secondary;
       text-transform: uppercase;
-      opacity: 0.9;
     }
 
     .score-value {
       font-family: $font-num;
-      font-size: 1.35rem;
-      font-weight: 800;
-      color: $text-light;
+      font-size: 1.38rem;
+      font-weight: 700;
+      color: $text-primary;
       line-height: 1.2;
       margin-top: 2px;
-      letter-spacing: -0.02em;
+      letter-spacing: 0.02em;
+      text-shadow: 0 0 8px rgba(0, 245, 255, 0.25);
     }
 
     .score-addition {
       position: absolute;
       top: -12px;
-      right: 12px;
-      background: linear-gradient(180deg, #FFE27A 0%, #E5B842 100%);
-      color: #2A1E0B;
+      right: 10px;
+      background: linear-gradient(180deg, #00F5FF 0%, #0099FF 100%);
+      color: #03060C;
       font-family: $font-num;
       font-size: 0.85rem;
-      font-weight: 900;
-      padding: 2px 7px;
-      border-radius: 20px;
-      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.35);
+      font-weight: 800;
+      padding: 2px 8px;
+      border-radius: 12px;
+      box-shadow: 0 0 10px rgba(0, 245, 255, 0.7);
       animation: scoreFloat 700ms ease-out forwards;
       pointer-events: none;
-      z-index: 10;
+      z-index: 15;
     }
   }
 }
 
-// 3. Board Section (Hero Element)
+// 3. Cyberpunk Energy Board (Hero Element)
 .board-wrapper {
   width: 100%;
   display: flex;
@@ -183,14 +226,14 @@
   background-color: $board-bg;
   border-radius: $board-border-radius;
   position: relative;
-  box-shadow: $shadow-recessed-board;
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  box-shadow: $shadow-board-glow, $shadow-recessed-board;
+  border: 1px solid $board-border;
   box-sizing: border-box;
   touch-action: none;
   overflow: hidden;
   outline: none;
 
-  // Ambient sand lighting along upper rim
+  // Top digital rim glow
   &::before {
     content: '';
     position: absolute;
@@ -198,14 +241,14 @@
     left: 0;
     right: 0;
     height: 12px;
-    background: linear-gradient(180deg, rgba(0, 0, 0, 0.35) 0%, transparent 100%);
+    background: linear-gradient(180deg, rgba(0, 245, 255, 0.12) 0%, transparent 100%);
     border-radius: $board-border-radius $board-border-radius 0 0;
     pointer-events: none;
     z-index: 1;
   }
 }
 
-// 4x4 Sockets Layer (Empty Cells)
+// 4x4 Sockets Layer (Dark Recessed Slots)
 .grid-sockets-layer {
   position: absolute;
   top: var(--gap);
@@ -221,7 +264,7 @@
   .grid-socket {
     width: 100%;
     height: 100%;
-    @include recessed-socket;
+    @include cyber-socket;
   }
 }
 
@@ -259,7 +302,7 @@
 
   &.tile-sliding {
     z-index: 7;
-    filter: drop-shadow(0 6px 14px rgba(18, 12, 7, 0.35));
+    filter: drop-shadow(0 6px 14px rgba(0, 245, 255, 0.35));
   }
 
   &.tile-consumed {
@@ -272,7 +315,7 @@
   }
 }
 
-// 3D Number Cube Inner Face (Bevels, Shadows, Colors, & Scale Animations)
+// 3D Neon Energy Cube Inner Face (Bevels, Shadows, Colors, & Scale Animations)
 .tile-inner {
   width: 100%;
   height: 100%;
@@ -283,19 +326,19 @@
   align-items: center;
   justify-content: center;
   line-height: 1;
-  font-weight: 900;
+  font-weight: 700;
   position: relative;
   will-change: transform;
 
   .tile-face-content {
     position: relative;
     z-index: 2;
-    transform: translateY(-1px); // Visual center compensation for 3D shelf
+    transform: translateY(-1px); // Optical center balance
   }
 
-  // Animation triggers target inner cube only (NEVER overriding outer translate)
+  // Animation triggers target inner cube only (isolated from outer translate)
   .tile-spawn & {
-    animation: tileSpawn 180ms cubic-bezier(0.18, 0.89, 0.32, 1.25) backwards;
+    animation: tileSpawn 200ms cubic-bezier(0.18, 0.89, 0.32, 1.25) backwards;
   }
 
   .tile-merged & {
@@ -304,7 +347,7 @@
 
   // Responsive font sizing based on digit count
   &.digits-1-2 {
-    font-size: clamp(1.6rem, calc(var(--cell-size) * 0.44), 2.2rem);
+    font-size: clamp(1.65rem, calc(var(--cell-size) * 0.45), 2.25rem);
   }
 
   &.digits-3 {
@@ -322,72 +365,93 @@
     letter-spacing: -0.04em;
   }
 
-  // Sophisticated Desert Tile Progression
+  // ==========================================
+  // Futuristic Cyberpunk Tile Progression
+  // ==========================================
+
+  // 2 -> dark metallic blue + cyan beveled edge
   &.tile-2 {
-    @include cube-3d(#FAF5EB, #DDD0BC, #30251B, 0.6);
+    @include cyber-cube-3d(#10192A, #0A111E, $neon-cyan, $neon-cyan, $text-primary);
   }
 
+  // 4 -> electric cyan
   &.tile-4 {
-    @include cube-3d(#F1E3C8, #D4BF9B, #30251B, 0.55);
+    @include cyber-cube-3d(#053E54, #022635, $neon-cyan, $neon-cyan, $text-cyan);
   }
 
+  // 8 -> electric blue
   &.tile-8 {
-    @include cube-3d(#E2BD84, #BD9352, #FFF8EA, 0.4);
+    @include cyber-cube-3d(#0D337F, #072054, $electric-blue, $electric-blue, $text-primary);
   }
 
+  // 16 -> blue-violet
   &.tile-16 {
-    @include cube-3d(#D99C4E, #B27022, #FFF8EA, 0.38);
+    @include cyber-cube-3d(#1E2070, #121448, #5D5FEF, #5D5FEF, $text-primary);
   }
 
+  // 32 -> violet
   &.tile-32 {
-    @include cube-3d(#CF7235, #A54B13, #FFF8EA, 0.35);
+    @include cyber-cube-3d(#3C176F, #270E48, $neon-purple, $neon-purple, $text-primary);
   }
 
+  // 64 -> purple
   &.tile-64 {
-    @include cube-3d(#BC4E25, #90320D, #FFF8EA, 0.35);
+    @include cyber-cube-3d(#531370, #360A4A, #A855F7, #A855F7, $text-primary);
   }
 
+  // 128 -> magenta
   &.tile-128 {
-    @include cube-3d(#A3411A, #762607, #FFF8EA, 0.32);
+    @include cyber-cube-3d(#68105F, #450A3F, #D946EF, #D946EF, $text-primary);
   }
 
+  // 256 -> hot pink / magenta
   &.tile-256 {
-    @include cube-3d(#873412, #5B1D04, #FFF8EA, 0.3);
+    @include cyber-cube-3d(#770A4F, #4F0635, $neon-magenta, $neon-magenta, $text-primary);
   }
 
+  // 512 -> pink-purple
   &.tile-512 {
-    @include cube-3d(#59250E, #3B1404, #FFF8EA, 0.28);
+    @include cyber-cube-3d(#63084C, #3F0530, #F43F5E, #F43F5E, $text-primary);
   }
 
+  // 1024 -> intense electric violet
   &.tile-1024 {
-    @include cube-3d(#7B3815, #4F1D05, #FFDF94, 0.35);
-    border: 1px solid rgba(255, 223, 148, 0.25);
+    @include cyber-cube-3d(#480C68, #2E0743, #8B5CFF, #8B5CFF, $text-cyan);
+    border: 1px solid rgba(0, 245, 255, 0.65);
+    box-shadow: 
+      0 4px 0 #030509,
+      0 6px 14px rgba(0, 0, 0, 0.7),
+      0 0 16px rgba(139, 92, 255, 0.45),
+      inset 0 1px 1px rgba(255, 255, 255, 0.3);
   }
 
-  // Special 2048 Milestone Cube
+  // 2048 -> Premium Cyan + Violet Energy Milestone Cube
   &.tile-2048 {
-    background: linear-gradient(135deg, #FFE88D 0%, #E5B842 50%, #C99624 100%);
-    color: #2A1E0B;
+    background: linear-gradient(135deg, #0A1C36 0%, #1F103B 50%, #00374D 100%);
+    border: 1.5px solid $neon-cyan;
+    color: #FFFFFF;
     border-radius: $tile-border-radius;
     position: relative;
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 
-      0 4px 0 #976E0E,
-      0 0 18px rgba(229, 184, 66, 0.5),
-      0 8px 16px rgba(18, 12, 7, 0.35),
-      inset 0 1px 1px rgba(255, 255, 255, 0.7);
+    animation: neonPulse2048 2.2s infinite ease-in-out;
+
+    .tile-face-content {
+      text-shadow: 
+        0 0 10px rgba(0, 245, 255, 0.9),
+        0 0 20px rgba(139, 92, 255, 0.6);
+    }
 
     &::before {
       content: '';
       position: absolute;
-      top: 2px;
-      left: 4px;
-      right: 4px;
+      top: 1px;
+      left: 3px;
+      right: 3px;
       height: 35%;
-      background: linear-gradient(180deg, rgba(255, 255, 255, 0.7) 0%, rgba(255, 255, 255, 0.05) 100%);
-      border-radius: ($tile-border-radius - 2px) ($tile-border-radius - 2px) 4px 4px;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0.02) 100%);
+      border-radius: ($tile-border-radius - 2px) ($tile-border-radius - 2px) 3px 3px;
       pointer-events: none;
     }
 
@@ -398,25 +462,25 @@
       left: 0;
       right: 0;
       height: 4px;
-      background: rgba(0, 0, 0, 0.2);
+      background: rgba(0, 0, 0, 0.35);
       border-radius: 0 0 $tile-border-radius $tile-border-radius;
       pointer-events: none;
     }
   }
 
-  // 4096+ Obsidian Gold
+  // 4096+ Obsidian Matrix Gold
   &.tile-super {
-    @include cube-3d(#241E19, #120E0A, #E5B842, 0.25);
-    border: 1px solid rgba(229, 184, 66, 0.35);
+    @include cyber-cube-3d(#14121E, #090810, #FF2BD6, #00F5FF, $neon-cyan);
+    border: 1.5px solid #FF2BD6;
     box-shadow: 
-      0 4px 0 #120E0A,
-      0 0 12px rgba(229, 184, 66, 0.25),
-      0 8px 16px rgba(18, 12, 7, 0.4),
-      inset 0 1px 1px rgba(255, 255, 255, 0.2);
+      0 4px 0 #050408,
+      0 0 14px rgba(255, 43, 214, 0.35),
+      0 8px 18px rgba(0, 0, 0, 0.8),
+      inset 0 1px 1px rgba(255, 255, 255, 0.25);
   }
 }
 
-// 4. Instructions Section
+// 4. Futuristic HUD Instructions
 .game-instructions {
   width: 100%;
   display: flex;
@@ -431,36 +495,38 @@
     display: flex;
     align-items: center;
     gap: 6px;
-    color: $dark-soft;
+    color: $text-secondary;
 
     .swipe-hint-icon {
+      color: $neon-cyan;
       animation: subtleSwipeHint 2.4s ease-in-out infinite;
     }
 
     .instructions-title {
-      font-family: $font-primary;
-      font-size: 0.78rem;
-      font-weight: 800;
-      letter-spacing: 0.14em;
+      font-family: $font-label;
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.16em;
       text-transform: uppercase;
+      color: $text-cyan;
     }
   }
 
   .instructions-desc {
     font-family: $font-primary;
     font-size: 0.74rem;
-    color: $dark-muted;
+    color: $text-muted;
     margin: 3px 0 0 0;
     line-height: 1.3;
 
     strong {
-      color: $tile-dark;
-      font-weight: 800;
+      color: $neon-cyan;
+      font-weight: 700;
     }
   }
 }
 
-// 5. Game Footer & Tactile Buttons
+// 5. Game Footer & Tactile Arcade Buttons
 .game-footer {
   width: 100%;
   display: grid;
@@ -470,33 +536,27 @@
   padding-top: 4px;
 
   .undo-btn {
-    @include tactile-button(#524032, #382A20, $sand-highlight);
+    @include cyber-button($neon-purple, #1A142A, #0F0B1A, $text-purple);
     width: 100%;
-    font-size: 0.88rem;
-    padding: 12px 14px;
-    gap: 6px;
 
     &.disabled,
     &:disabled {
-      opacity: 0.45;
+      opacity: 0.35;
       cursor: not-allowed;
-      filter: grayscale(0.5);
+      filter: grayscale(0.7);
       pointer-events: none;
     }
   }
 
   .new-game-btn {
-    @include tactile-button($sand, $sand-deep, $dark);
+    @include cyber-button($neon-cyan, #102232, #0A1622, $text-cyan);
     width: 100%;
-    font-size: 0.88rem;
-    padding: 12px 14px;
-    gap: 6px;
   }
 }
 
-// 6. Game Over & Win Modal Overlays
+// 6. System Overlays (Game Over & Win)
 .game-overlay {
-  @include desert-overlay;
+  @include cyber-overlay;
   animation: overlayFadeIn 240ms cubic-bezier(0.2, 0.8, 0.3, 1) forwards;
 
   .overlay-content {
@@ -504,40 +564,45 @@
     flex-direction: column;
     align-items: center;
     width: 100%;
+    position: relative;
+    z-index: 2;
   }
 
   .milestone-badge {
-    font-family: $font-primary;
-    font-size: 0.68rem;
-    font-weight: 900;
-    letter-spacing: 0.2em;
-    color: #FFE27A;
-    background: rgba(229, 184, 66, 0.2);
-    border: 1px solid rgba(229, 184, 66, 0.4);
-    padding: 3px 10px;
-    border-radius: 20px;
-    margin-bottom: 6px;
+    font-family: $font-label;
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.22em;
+    color: $neon-cyan;
+    background: rgba(0, 245, 255, 0.12);
+    border: 1px solid rgba(0, 245, 255, 0.4);
+    padding: 3px 12px;
+    border-radius: 14px;
+    margin-bottom: 8px;
+    text-transform: uppercase;
   }
 
   .overlay-title {
-    font-family: $font-primary;
-    font-size: 2.2rem;
+    font-family: $font-hud;
+    font-size: 2.1rem;
     font-weight: 900;
     margin: 0;
-    color: $text-light;
-    letter-spacing: -0.02em;
+    color: $text-primary;
+    letter-spacing: 0.02em;
     line-height: 1.1;
 
     &.gold-text {
-      color: #FFDF94;
-      text-shadow: 0 0 20px rgba(229, 184, 66, 0.6);
+      color: $text-cyan;
+      text-shadow: 
+        0 0 16px rgba(0, 245, 255, 0.8),
+        0 0 32px rgba(139, 92, 255, 0.4);
     }
   }
 
   .overlay-subtitle {
     font-family: $font-primary;
     font-size: 0.82rem;
-    color: $sand-light;
+    color: $text-secondary;
     margin: 6px 0 16px 0;
     opacity: 0.9;
   }
@@ -548,28 +613,30 @@
     margin-bottom: 20px;
 
     .stat-item {
-      background: rgba(20, 14, 9, 0.55);
-      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: rgba(11, 16, 26, 0.75);
+      border: 1px solid rgba(0, 245, 255, 0.2);
       border-radius: 10px;
       padding: 8px 16px;
       display: flex;
       flex-direction: column;
       align-items: center;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
 
       .stat-label {
-        font-family: $font-primary;
-        font-size: 0.62rem;
-        font-weight: 800;
-        letter-spacing: 0.12em;
-        color: $sand-light;
+        font-family: $font-label;
+        font-size: 0.64rem;
+        font-weight: 700;
+        letter-spacing: 0.14em;
+        color: $text-secondary;
       }
 
       .stat-val {
         font-family: $font-num;
         font-size: 1.3rem;
-        font-weight: 800;
-        color: $text-light;
+        font-weight: 700;
+        color: $text-primary;
         margin-top: 2px;
+        text-shadow: 0 0 6px rgba(0, 245, 255, 0.3);
       }
     }
   }
@@ -583,23 +650,19 @@
 
     .overlay-btn {
       width: 100%;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
 
       &.primary-btn {
-        @include tactile-button(#E5B842, #A88118, #2A1E0B);
+        @include cyber-button($neon-cyan, #102538, #0B1927, $text-cyan);
         font-weight: 800;
       }
 
       &.undo-overlay-btn {
-        @include tactile-button(#D49B45, #9E6B1E, #2A1E0B);
+        @include cyber-button($neon-purple, #201738, #140E24, $text-purple);
         font-weight: 800;
       }
 
       &.secondary-btn {
-        @include tactile-button($sand, $sand-deep, $dark);
+        @include cyber-button(rgba(255, 255, 255, 0.25), #161B26, #0D1017, $text-secondary);
       }
     }
   }

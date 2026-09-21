@@ -17,11 +17,11 @@ export const GameOverlay = ({
 
   if (won) {
     return (
-      <div className="game-overlay win-overlay" role="dialog" aria-modal="true" aria-label="Victory">
+      <div className="game-overlay win-overlay" role="dialog" aria-modal="true" aria-label="System Unlocked">
         <div className="overlay-content">
-          <div className="milestone-badge">LEGENDARY ARTIFACT</div>
-          <h2 className="overlay-title gold-text">2048!</h2>
-          <p className="overlay-subtitle">You have conquered the desert sands.</p>
+          <div className="milestone-badge">SYSTEM UNLOCKED</div>
+          <h2 className="overlay-title gold-text">2048 ACHIEVED</h2>
+          <p className="overlay-subtitle">Energy core matrix stabilized at maximum capacity.</p>
 
           <div className="overlay-stats">
             <div className="stat-item">
@@ -52,18 +52,19 @@ export const GameOverlay = ({
   }
 
   return (
-    <div className="game-overlay game-over-overlay" role="dialog" aria-modal="true" aria-label="Game Over">
+    <div className="game-overlay game-over-overlay" role="dialog" aria-modal="true" aria-label="System Error">
       <div className="overlay-content">
-        <h2 className="overlay-title">GAME OVER</h2>
-        <p className="overlay-subtitle">No more valid moves in the sand.</p>
+        <div className="milestone-badge">GRID COLLAPSED</div>
+        <h2 className="overlay-title">SYSTEM ERROR</h2>
+        <p className="overlay-subtitle">No remaining vectors in the energy grid.</p>
 
         <div className="overlay-stats">
           <div className="stat-item">
-            <span className="stat-label">YOUR SCORE</span>
+            <span className="stat-label">FINAL SCORE</span>
             <span className="stat-val">{formatNumber(score)}</span>
           </div>
           <div className="stat-item">
-            <span className="stat-label">BEST SCORE</span>
+            <span className="stat-label">BEST RECORD</span>
             <span className="stat-val">{formatNumber(bestScore)}</span>
           </div>
         </div>
