@@ -1,0 +1,38 @@
+// Desert Luxury Theme Color Palette
+$sand-deep: #B88952;
+$sand: #D7B078;
+$sand-light: #E8C995;
+$sand-highlight: #F4DDB5;
+$sand-pale: #FBF4E6;
+
+$dark: #292018;
+$dark-soft: #51402F;
+$dark-muted: #79614B;
+
+$board-bg: #3E2F23;
+$board-socket: #33261C;
+$board-border: #523E2E;
+
+$tile-light: #F4DEB5;
+$tile-dark: #6A4325;
+
+$text-dark: #30251B;
+$text-light: #FFF8EA;
+$text-gold: #FFDF94;
+$text-muted: #A89078;
+
+// Fonts
+$font-primary: 'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+$font-num: 'Manrope', 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
+
+// Shadows & 3D Lighting
+$shadow-sand-ambient: 0 12px 32px rgba(41, 32, 24, 0.18), 0 4px 12px rgba(41, 32, 24, 0.1);
+$shadow-recessed-board: inset 0 6px 14px rgba(20, 14, 9, 0.55), inset 0 2px 4px rgba(20, 14, 9, 0.4), 0 8px 24px rgba(41, 32, 24, 0.22);
+$shadow-socket: inset 0 3px 6px rgba(16, 11, 7, 0.6), inset 0 1px 2px rgba(16, 11, 7, 0.4);
+
+// Sizing
+$max-mobile-width: 460px;
+$board-border-radius: 18px;
+$tile-border-radius: 10px;
+$socket-border-radius: 10px;
+$gap: 10px;

@@ -1,0 +1,606 @@
+@use 'sass:color';
+@use 'variables' as *;
+@use 'mixins' as *;
+@use 'animations' as *;
+
+// Mobile Game Screen Container
+.mobile-game-container {
+  width: 100%;
+  max-width: $max-mobile-width;
+  margin: 0 auto;
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 12px 16px 20px 16px;
+  padding-top: max(12px, env(safe-area-inset-top));
+  padding-bottom: max(20px, env(safe-area-inset-bottom));
+  padding-left: max(16px, env(safe-area-inset-left));
+  padding-right: max(16px, env(safe-area-inset-right));
+  box-sizing: border-box;
+  position: relative;
+  touch-action: pan-y;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+// 1. Header Section
+.game-header {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+
+  .header-brand {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .game-title {
+    font-family: $font-primary;
+    font-size: 2.2rem;
+    font-weight: 900;
+    line-height: 1;
+    margin: 0;
+    color: $dark;
+    letter-spacing: -0.04em;
+    text-shadow: 0 1px 1px rgba(255, 255, 255, 0.6);
+  }
+
+  .game-badge {
+    font-family: $font-primary;
+    font-size: 0.68rem;
+    font-weight: 800;
+    letter-spacing: 0.18em;
+    color: $tile-dark;
+    margin-top: 3px;
+    text-transform: uppercase;
+    background: rgba(184, 137, 82, 0.22);
+    padding: 2px 8px;
+    border-radius: 6px;
+    border: 1px solid rgba(184, 137, 82, 0.35);
+  }
+
+  .sound-toggle-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 42px;
+    height: 42px;
+    background: linear-gradient(180deg, color.adjust($sand, $lightness: 6%) 0%, $sand 100%);
+    border: none;
+    border-radius: 12px;
+    color: $dark;
+    cursor: pointer;
+    box-shadow: 
+      0 3px 0 $sand-deep,
+      0 4px 8px rgba(41, 32, 24, 0.16),
+      inset 0 1px 1px rgba(255, 255, 255, 0.4);
+    transition: transform 80ms ease, box-shadow 80ms ease;
+    -webkit-tap-highlight-color: transparent;
+
+    &:active {
+      transform: translateY(2px);
+      box-shadow: 0 1px 0 $sand-deep, inset 0 1px 1px rgba(255, 255, 255, 0.3);
+    }
+
+    &.muted {
+      color: $dark-muted;
+      opacity: 0.75;
+    }
+  }
+}
+
+// 2. Score Section
+.scoreboard-container {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 14px;
+
+  .score-card {
+    position: relative;
+    background: linear-gradient(180deg, #443428 0%, #35281E 100%);
+    border-radius: 14px;
+    padding: 8px 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 
+      0 3px 0 #201710,
+      0 6px 12px rgba(20, 14, 9, 0.25),
+      inset 0 1px 1px rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+
+    .score-label {
+      font-family: $font-primary;
+      font-size: 0.7rem;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      color: $sand-light;
+      text-transform: uppercase;
+      opacity: 0.9;
+    }
+
+    .score-value {
+      font-family: $font-num;
+      font-size: 1.35rem;
+      font-weight: 800;
+      color: $text-light;
+      line-height: 1.2;
+      margin-top: 2px;
+      letter-spacing: -0.02em;
+    }
+
+    .score-addition {
+      position: absolute;
+      top: -12px;
+      right: 12px;
+      background: linear-gradient(180deg, #FFE27A 0%, #E5B842 100%);
+      color: #2A1E0B;
+      font-family: $font-num;
+      font-size: 0.85rem;
+      font-weight: 900;
+      padding: 2px 7px;
+      border-radius: 20px;
+      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.35);
+      animation: scoreFloat 700ms ease-out forwards;
+      pointer-events: none;
+      z-index: 10;
+    }
+  }
+}
+
+// 3. Board Section (Hero Element)
+.board-wrapper {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 12px;
+
+  // Responsive Board calculations
+  --board-width: min(calc(100vw - 32px), 420px);
+  --gap: 9px;
+  --cell-size: calc((var(--board-width) - (var(--gap) * 5)) / 4);
+
+  @media (min-width: 400px) {
+    --gap: 10px;
+  }
+  @media (max-width: 350px) {
+    --gap: 7px;
+  }
+}
+
+.game-board-recessed {
+  width: var(--board-width);
+  height: var(--board-width);
+  background-color: $board-bg;
+  border-radius: $board-border-radius;
+  position: relative;
+  box-shadow: $shadow-recessed-board;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  box-sizing: border-box;
+  touch-action: none;
+  overflow: hidden;
+  outline: none;
+
+  // Ambient sand lighting along upper rim
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 12px;
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0.35) 0%, transparent 100%);
+    border-radius: $board-border-radius $board-border-radius 0 0;
+    pointer-events: none;
+    z-index: 1;
+  }
+}
+
+// 4x4 Sockets Layer (Empty Cells)
+.grid-sockets-layer {
+  position: absolute;
+  top: var(--gap);
+  left: var(--gap);
+  right: var(--gap);
+  bottom: var(--gap);
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(4, 1fr);
+  gap: var(--gap);
+  pointer-events: none;
+
+  .grid-socket {
+    width: 100%;
+    height: 100%;
+    @include recessed-socket;
+  }
+}
+
+// Dynamic Tiles Layer
+.tiles-layer {
+  position: absolute;
+  top: var(--gap);
+  left: var(--gap);
+  width: calc(var(--board-width) - (var(--gap) * 2));
+  height: calc(var(--board-width) - (var(--gap) * 2));
+  pointer-events: none;
+}
+
+// 3D Number Cube Component (Outer Container: Positioning & Translation ONLY)
+.tile-cube {
+  width: var(--cell-size);
+  height: var(--cell-size);
+  position: absolute;
+  top: 0;
+  left: 0;
+  box-sizing: border-box;
+  transform: translate(
+    calc(var(--col) * (var(--cell-size) + var(--gap))),
+    calc(var(--row) * (var(--cell-size) + var(--gap)))
+  );
+  transition: transform 180ms cubic-bezier(0.25, 1, 0.5, 1);
+  will-change: transform;
+  z-index: 5;
+  pointer-events: none;
+
+  // Enforce zero transform transition on newly spawned tiles
+  &.tile-spawn {
+    transition: none !important;
+  }
+
+  &.tile-sliding {
+    z-index: 7;
+    filter: drop-shadow(0 6px 14px rgba(18, 12, 7, 0.35));
+  }
+
+  &.tile-consumed {
+    z-index: 6;
+    opacity: 0.95;
+  }
+
+  &.tile-merged {
+    z-index: 8;
+  }
+}
+
+// 3D Number Cube Inner Face (Bevels, Shadows, Colors, & Scale Animations)
+.tile-inner {
+  width: 100%;
+  height: 100%;
+  border-radius: $tile-border-radius;
+  font-family: $font-num;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  font-weight: 900;
+  position: relative;
+  will-change: transform;
+
+  .tile-face-content {
+    position: relative;
+    z-index: 2;
+    transform: translateY(-1px); // Visual center compensation for 3D shelf
+  }
+
+  // Animation triggers target inner cube only (NEVER overriding outer translate)
+  .tile-spawn & {
+    animation: tileSpawn 180ms cubic-bezier(0.18, 0.89, 0.32, 1.25) backwards;
+  }
+
+  .tile-merged & {
+    animation: tileMerge 220ms cubic-bezier(0.18, 0.89, 0.32, 1.25);
+  }
+
+  // Responsive font sizing based on digit count
+  &.digits-1-2 {
+    font-size: clamp(1.6rem, calc(var(--cell-size) * 0.44), 2.2rem);
+  }
+
+  &.digits-3 {
+    font-size: clamp(1.3rem, calc(var(--cell-size) * 0.36), 1.8rem);
+    letter-spacing: -0.02em;
+  }
+
+  &.digits-4 {
+    font-size: clamp(1.05rem, calc(var(--cell-size) * 0.28), 1.45rem);
+    letter-spacing: -0.03em;
+  }
+
+  &.digits-5 {
+    font-size: clamp(0.85rem, calc(var(--cell-size) * 0.22), 1.15rem);
+    letter-spacing: -0.04em;
+  }
+
+  // Sophisticated Desert Tile Progression
+  &.tile-2 {
+    @include cube-3d(#FAF5EB, #DDD0BC, #30251B, 0.6);
+  }
+
+  &.tile-4 {
+    @include cube-3d(#F1E3C8, #D4BF9B, #30251B, 0.55);
+  }
+
+  &.tile-8 {
+    @include cube-3d(#E2BD84, #BD9352, #FFF8EA, 0.4);
+  }
+
+  &.tile-16 {
+    @include cube-3d(#D99C4E, #B27022, #FFF8EA, 0.38);
+  }
+
+  &.tile-32 {
+    @include cube-3d(#CF7235, #A54B13, #FFF8EA, 0.35);
+  }
+
+  &.tile-64 {
+    @include cube-3d(#BC4E25, #90320D, #FFF8EA, 0.35);
+  }
+
+  &.tile-128 {
+    @include cube-3d(#A3411A, #762607, #FFF8EA, 0.32);
+  }
+
+  &.tile-256 {
+    @include cube-3d(#873412, #5B1D04, #FFF8EA, 0.3);
+  }
+
+  &.tile-512 {
+    @include cube-3d(#59250E, #3B1404, #FFF8EA, 0.28);
+  }
+
+  &.tile-1024 {
+    @include cube-3d(#7B3815, #4F1D05, #FFDF94, 0.35);
+    border: 1px solid rgba(255, 223, 148, 0.25);
+  }
+
+  // Special 2048 Milestone Cube
+  &.tile-2048 {
+    background: linear-gradient(135deg, #FFE88D 0%, #E5B842 50%, #C99624 100%);
+    color: #2A1E0B;
+    border-radius: $tile-border-radius;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 
+      0 4px 0 #976E0E,
+      0 0 18px rgba(229, 184, 66, 0.5),
+      0 8px 16px rgba(18, 12, 7, 0.35),
+      inset 0 1px 1px rgba(255, 255, 255, 0.7);
+
+    &::before {
+      content: '';
+      position: absolute;
+      top: 2px;
+      left: 4px;
+      right: 4px;
+      height: 35%;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.7) 0%, rgba(255, 255, 255, 0.05) 100%);
+      border-radius: ($tile-border-radius - 2px) ($tile-border-radius - 2px) 4px 4px;
+      pointer-events: none;
+    }
+
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: rgba(0, 0, 0, 0.2);
+      border-radius: 0 0 $tile-border-radius $tile-border-radius;
+      pointer-events: none;
+    }
+  }
+
+  // 4096+ Obsidian Gold
+  &.tile-super {
+    @include cube-3d(#241E19, #120E0A, #E5B842, 0.25);
+    border: 1px solid rgba(229, 184, 66, 0.35);
+    box-shadow: 
+      0 4px 0 #120E0A,
+      0 0 12px rgba(229, 184, 66, 0.25),
+      0 8px 16px rgba(18, 12, 7, 0.4),
+      inset 0 1px 1px rgba(255, 255, 255, 0.2);
+  }
+}
+
+// 4. Instructions Section
+.game-instructions {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 4px;
+  margin-bottom: 12px;
+  text-align: center;
+
+  .instructions-header {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: $dark-soft;
+
+    .swipe-hint-icon {
+      animation: subtleSwipeHint 2.4s ease-in-out infinite;
+    }
+
+    .instructions-title {
+      font-family: $font-primary;
+      font-size: 0.78rem;
+      font-weight: 800;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+  }
+
+  .instructions-desc {
+    font-family: $font-primary;
+    font-size: 0.74rem;
+    color: $dark-muted;
+    margin: 3px 0 0 0;
+    line-height: 1.3;
+
+    strong {
+      color: $tile-dark;
+      font-weight: 800;
+    }
+  }
+}
+
+// 5. Game Footer & Tactile Buttons
+.game-footer {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-top: auto;
+  padding-top: 4px;
+
+  .undo-btn {
+    @include tactile-button(#524032, #382A20, $sand-highlight);
+    width: 100%;
+    font-size: 0.88rem;
+    padding: 12px 14px;
+    gap: 6px;
+
+    &.disabled,
+    &:disabled {
+      opacity: 0.45;
+      cursor: not-allowed;
+      filter: grayscale(0.5);
+      pointer-events: none;
+    }
+  }
+
+  .new-game-btn {
+    @include tactile-button($sand, $sand-deep, $dark);
+    width: 100%;
+    font-size: 0.88rem;
+    padding: 12px 14px;
+    gap: 6px;
+  }
+}
+
+// 6. Game Over & Win Modal Overlays
+.game-overlay {
+  @include desert-overlay;
+  animation: overlayFadeIn 240ms cubic-bezier(0.2, 0.8, 0.3, 1) forwards;
+
+  .overlay-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+  }
+
+  .milestone-badge {
+    font-family: $font-primary;
+    font-size: 0.68rem;
+    font-weight: 900;
+    letter-spacing: 0.2em;
+    color: #FFE27A;
+    background: rgba(229, 184, 66, 0.2);
+    border: 1px solid rgba(229, 184, 66, 0.4);
+    padding: 3px 10px;
+    border-radius: 20px;
+    margin-bottom: 6px;
+  }
+
+  .overlay-title {
+    font-family: $font-primary;
+    font-size: 2.2rem;
+    font-weight: 900;
+    margin: 0;
+    color: $text-light;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+
+    &.gold-text {
+      color: #FFDF94;
+      text-shadow: 0 0 20px rgba(229, 184, 66, 0.6);
+    }
+  }
+
+  .overlay-subtitle {
+    font-family: $font-primary;
+    font-size: 0.82rem;
+    color: $sand-light;
+    margin: 6px 0 16px 0;
+    opacity: 0.9;
+  }
+
+  .overlay-stats {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 20px;
+
+    .stat-item {
+      background: rgba(20, 14, 9, 0.55);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 10px;
+      padding: 8px 16px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+      .stat-label {
+        font-family: $font-primary;
+        font-size: 0.62rem;
+        font-weight: 800;
+        letter-spacing: 0.12em;
+        color: $sand-light;
+      }
+
+      .stat-val {
+        font-family: $font-num;
+        font-size: 1.3rem;
+        font-weight: 800;
+        color: $text-light;
+        margin-top: 2px;
+      }
+    }
+  }
+
+  .overlay-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+    max-width: 230px;
+
+    .overlay-btn {
+      width: 100%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+
+      &.primary-btn {
+        @include tactile-button(#E5B842, #A88118, #2A1E0B);
+        font-weight: 800;
+      }
+
+      &.undo-overlay-btn {
+        @include tactile-button(#D49B45, #9E6B1E, #2A1E0B);
+        font-weight: 800;
+      }
+
+      &.secondary-btn {
+        @include tactile-button($sand, $sand-deep, $dark);
+      }
+    }
+  }
+}
