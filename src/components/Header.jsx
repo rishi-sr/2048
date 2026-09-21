@@ -7,7 +7,7 @@ export const Header = ({ isMuted, onToggleSound }) => {
         <h1 className="game-title">2048</h1>
         <div className="game-badge">
           <span className="badge-dot" aria-hidden="true" />
-          <span>NEON GRID</span>
+          <span>AURORA GRID</span>
         </div>
       </div>
 

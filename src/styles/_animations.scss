@@ -1,16 +1,16 @@
-// Cyberpunk / Neon Grid Keyframe Animations
+// Deep Space Aurora Keyframe Animations
 
-// 1. Tile Spawn: scale(0.7) opacity(0) -> scale(1.08) + neon flash -> scale(1)
+// 1. Tile Spawn: scale(0.7) opacity(0) -> scale(1.08) + aurora flash -> scale(1)
 @keyframes tileSpawn {
   0% {
     opacity: 0;
     transform: scale(0.7);
-    filter: brightness(1.6) drop-shadow(0 0 12px rgba(0, 245, 255, 0.8));
+    filter: brightness(1.6) drop-shadow(0 0 12px rgba(0, 255, 204, 0.85));
   }
   65% {
     opacity: 1;
     transform: scale(1.08);
-    filter: brightness(1.2) drop-shadow(0 0 8px rgba(0, 245, 255, 0.5));
+    filter: brightness(1.2) drop-shadow(0 0 8px rgba(0, 255, 204, 0.55));
   }
   100% {
     opacity: 1;
@@ -19,7 +19,7 @@
   }
 }
 
-// 2. Tile Merge: scale(1) -> scale(1.18) with bright edge flash & glow burst -> scale(1)
+// 2. Tile Merge: scale(1) -> scale(1.18) with bright edge flash & aurora glow burst -> scale(1)
 @keyframes tileMerge {
   0% {
     transform: scale(1);
@@ -27,7 +27,7 @@
   }
   45% {
     transform: scale(1.18);
-    filter: brightness(1.35) drop-shadow(0 0 16px rgba(0, 245, 255, 0.75));
+    filter: brightness(1.35) drop-shadow(0 0 16px rgba(0, 255, 204, 0.8));
   }
   100% {
     transform: scale(1);
@@ -35,20 +35,20 @@
   }
 }
 
-// 3. 2048 Milestone Core Pulse
+// 3. 2048 Milestone Aurora Core Pulse
 @keyframes neonPulse2048 {
   0%, 100% {
     box-shadow: 
-      0 4px 0 #050810,
-      0 0 14px rgba(0, 245, 255, 0.4),
-      0 0 28px rgba(139, 92, 255, 0.25),
+      0 4px 0 #030612,
+      0 0 14px rgba(0, 255, 204, 0.45),
+      0 0 28px rgba(192, 132, 252, 0.35),
       inset 0 1px 1px rgba(255, 255, 255, 0.6);
   }
   50% {
     box-shadow: 
-      0 4px 0 #050810,
-      0 0 22px rgba(0, 245, 255, 0.65),
-      0 0 40px rgba(139, 92, 255, 0.45),
+      0 4px 0 #030612,
+      0 0 24px rgba(0, 255, 204, 0.75),
+      0 0 44px rgba(192, 132, 252, 0.55),
       inset 0 1px 1px rgba(255, 255, 255, 0.85);
   }
 }
@@ -68,12 +68,12 @@
   0% {
     opacity: 0;
     transform: translateY(0) scale(0.85);
-    filter: drop-shadow(0 0 4px rgba(0, 245, 255, 0.8));
+    filter: drop-shadow(0 0 4px rgba(0, 255, 204, 0.8));
   }
   20% {
     opacity: 1;
     transform: translateY(-8px) scale(1.06);
-    filter: drop-shadow(0 0 8px rgba(0, 245, 255, 0.9));
+    filter: drop-shadow(0 0 8px rgba(0, 255, 204, 0.95));
   }
   75% {
     opacity: 0.95;
@@ -102,12 +102,12 @@
   0%, 100% {
     opacity: 1;
     transform: scale(1);
-    box-shadow: 0 0 6px rgba(0, 245, 255, 0.8);
+    box-shadow: 0 0 6px rgba(0, 255, 204, 0.85);
   }
   50% {
     opacity: 0.5;
     transform: scale(0.85);
-    box-shadow: 0 0 2px rgba(0, 245, 255, 0.3);
+    box-shadow: 0 0 2px rgba(0, 255, 204, 0.3);
   }
 }
 

@@ -49,8 +49,9 @@
     color: $text-primary;
     letter-spacing: -0.02em;
     text-shadow: 
-      0 0 10px rgba(0, 245, 255, 0.45),
-      0 0 24px rgba(0, 245, 255, 0.18);
+      0 0 10px rgba(0, 255, 204, 0.45),
+      0 0 24px rgba(0, 255, 204, 0.2),
+      0 0 36px rgba(192, 132, 252, 0.15);
   }
 
   .game-badge {
@@ -64,10 +65,10 @@
     color: $text-cyan;
     margin-top: 4px;
     text-transform: uppercase;
-    background: rgba(0, 245, 255, 0.08);
+    background: rgba(0, 255, 204, 0.08);
     padding: 2px 8px;
     border-radius: 4px;
-    border: 1px solid rgba(0, 245, 255, 0.3);
+    border: 1px solid rgba(0, 255, 204, 0.32);
 
     .badge-dot {
       width: 6px;
@@ -84,22 +85,22 @@
     justify-content: center;
     width: 42px;
     height: 42px;
-    background: linear-gradient(180deg, #162032 0%, #0E1422 100%);
-    border: 1px solid rgba(0, 245, 255, 0.35);
+    background: linear-gradient(180deg, #0E1A2E 0%, #08101E 100%);
+    border: 1px solid rgba(0, 255, 204, 0.35);
     border-radius: 10px;
     color: $text-cyan;
     cursor: pointer;
     box-shadow: 
       0 2px 0 rgba(0, 0, 0, 0.8),
       0 4px 10px rgba(0, 0, 0, 0.5),
-      0 0 8px rgba(0, 245, 255, 0.15),
+      0 0 8px rgba(0, 255, 204, 0.15),
       inset 0 1px 1px rgba(255, 255, 255, 0.15);
     transition: transform 90ms ease, box-shadow 90ms ease, border-color 90ms ease;
     -webkit-tap-highlight-color: transparent;
 
     &:hover {
-      border-color: rgba(0, 245, 255, 0.75);
-      box-shadow: 0 0 12px rgba(0, 245, 255, 0.3);
+      border-color: rgba(0, 255, 204, 0.75);
+      box-shadow: 0 0 12px rgba(0, 255, 204, 0.3);
     }
 
     &:active {
@@ -109,7 +110,7 @@
 
     &.muted {
       color: $text-muted;
-      border-color: rgba(84, 102, 120, 0.35);
+      border-color: rgba(71, 85, 105, 0.35);
       box-shadow: 0 2px 0 rgba(0, 0, 0, 0.8);
       opacity: 0.75;
     }
@@ -126,7 +127,7 @@
 
   .score-card {
     position: relative;
-    background: linear-gradient(180deg, #101625 0%, #0B0F19 100%);
+    background: linear-gradient(180deg, #0C152B 0%, #060B18 100%);
     border-radius: 12px;
     padding: 8px 12px;
     display: flex;
@@ -137,7 +138,7 @@
       0 3px 0 rgba(0, 0, 0, 0.9),
       0 6px 14px rgba(0, 0, 0, 0.6),
       inset 0 1px 1px rgba(255, 255, 255, 0.08);
-    border: 1px solid rgba(0, 245, 255, 0.22);
+    border: 1px solid rgba(0, 255, 204, 0.24);
 
     // Subtle corner notch decoration
     &::before {
@@ -147,16 +148,16 @@
       left: 0;
       width: 6px;
       height: 6px;
-      border-top: 2px solid $neon-cyan;
-      border-left: 2px solid $neon-cyan;
+      border-top: 2px solid $aurora-teal;
+      border-left: 2px solid $aurora-teal;
       border-top-left-radius: 12px;
       pointer-events: none;
     }
 
     &.best-score {
-      border-color: rgba(139, 92, 255, 0.25);
+      border-color: rgba(192, 132, 252, 0.28);
       &::before {
-        border-color: $neon-purple;
+        border-color: $cosmic-lilac;
       }
     }
 
@@ -177,21 +178,21 @@
       line-height: 1.2;
       margin-top: 2px;
       letter-spacing: 0.02em;
-      text-shadow: 0 0 8px rgba(0, 245, 255, 0.25);
+      text-shadow: 0 0 8px rgba(0, 255, 204, 0.25);
     }
 
     .score-addition {
       position: absolute;
       top: -12px;
       right: 10px;
-      background: linear-gradient(180deg, #00F5FF 0%, #0099FF 100%);
-      color: #03060C;
+      background: linear-gradient(180deg, #00FFCC 0%, #0284C7 100%);
+      color: #030612;
       font-family: $font-num;
       font-size: 0.85rem;
       font-weight: 800;
       padding: 2px 8px;
       border-radius: 12px;
-      box-shadow: 0 0 10px rgba(0, 245, 255, 0.7);
+      box-shadow: 0 0 10px rgba(0, 255, 204, 0.75);
       animation: scoreFloat 700ms ease-out forwards;
       pointer-events: none;
       z-index: 15;
@@ -223,7 +224,9 @@
 .game-board-recessed {
   width: var(--board-width);
   height: var(--board-width);
-  background-color: $board-bg;
+  background-color: rgba(9, 16, 36, 0.84);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   border-radius: $board-border-radius;
   position: relative;
   box-shadow: $shadow-board-glow, $shadow-recessed-board;
@@ -241,7 +244,7 @@
     left: 0;
     right: 0;
     height: 12px;
-    background: linear-gradient(180deg, rgba(0, 245, 255, 0.12) 0%, transparent 100%);
+    background: linear-gradient(180deg, rgba(0, 255, 204, 0.14) 0%, transparent 100%);
     border-radius: $board-border-radius $board-border-radius 0 0;
     pointer-events: none;
     z-index: 1;
@@ -302,7 +305,7 @@
 
   &.tile-sliding {
     z-index: 7;
-    filter: drop-shadow(0 6px 14px rgba(0, 245, 255, 0.35));
+    filter: drop-shadow(0 6px 14px rgba(0, 255, 204, 0.4));
   }
 
   &.tile-consumed {
@@ -366,69 +369,69 @@
   }
 
   // ==========================================
-  // Futuristic Cyberpunk Tile Progression
+  // Deep Space Aurora Tile Progression
   // ==========================================
 
-  // 2 -> dark metallic blue + cyan beveled edge
+  // 2 -> Deep space abyss + aurora teal rim
   &.tile-2 {
-    @include cyber-cube-3d(#10192A, #0A111E, $neon-cyan, $neon-cyan, $text-primary);
+    @include cyber-cube-3d(#081728, #050E1A, $aurora-teal, $aurora-teal, $text-primary);
   }
 
-  // 4 -> electric cyan
+  // 4 -> Aurora Mint / Teal glow
   &.tile-4 {
-    @include cyber-cube-3d(#053E54, #022635, $neon-cyan, $neon-cyan, $text-cyan);
+    @include cyber-cube-3d(#053E47, #02272E, $aurora-teal, $aurora-teal, $text-aurora);
   }
 
-  // 8 -> electric blue
+  // 8 -> Deep Space Cobalt / Cyan
   &.tile-8 {
-    @include cyber-cube-3d(#0D337F, #072054, $electric-blue, $electric-blue, $text-primary);
+    @include cyber-cube-3d(#0A3870, #062348, $stellar-blue, $stellar-blue, $text-primary);
   }
 
-  // 16 -> blue-violet
+  // 16 -> Celestial Indigo
   &.tile-16 {
-    @include cyber-cube-3d(#1E2070, #121448, #5D5FEF, #5D5FEF, $text-primary);
+    @include cyber-cube-3d(#1A2578, #10174D, #6366F1, #6366F1, $text-primary);
   }
 
-  // 32 -> violet
+  // 32 -> Cosmic Violet
   &.tile-32 {
-    @include cyber-cube-3d(#3C176F, #270E48, $neon-purple, $neon-purple, $text-primary);
+    @include cyber-cube-3d(#321B6E, #1F1046, $cosmic-purple, $cosmic-purple, $text-primary);
   }
 
-  // 64 -> purple
+  // 64 -> Cosmic Lilac
   &.tile-64 {
-    @include cyber-cube-3d(#531370, #360A4A, #A855F7, #A855F7, $text-primary);
+    @include cyber-cube-3d(#4A1A70, #2E0E47, $cosmic-lilac, $cosmic-lilac, $text-primary);
   }
 
-  // 128 -> magenta
+  // 128 -> Radiant Nebula Orchid
   &.tile-128 {
-    @include cyber-cube-3d(#68105F, #450A3F, #D946EF, #D946EF, $text-primary);
+    @include cyber-cube-3d(#62176B, #3F0D45, $nebula-magenta, $nebula-magenta, $text-primary);
   }
 
-  // 256 -> hot pink / magenta
+  // 256 -> Aurora Plasma Rose
   &.tile-256 {
-    @include cyber-cube-3d(#770A4F, #4F0635, $neon-magenta, $neon-magenta, $text-primary);
+    @include cyber-cube-3d(#741154, #4A0835, $aurora-rose, $aurora-rose, $text-primary);
   }
 
-  // 512 -> pink-purple
+  // 512 -> Solar Flare Coral
   &.tile-512 {
-    @include cyber-cube-3d(#63084C, #3F0530, #F43F5E, #F43F5E, $text-primary);
+    @include cyber-cube-3d(#6E143F, #470A28, #FB7185, #FB7185, $text-primary);
   }
 
-  // 1024 -> intense electric violet
+  // 1024 -> Interstellar Starlight (Cosmic Lilac + Aurora Edge)
   &.tile-1024 {
-    @include cyber-cube-3d(#480C68, #2E0743, #8B5CFF, #8B5CFF, $text-cyan);
-    border: 1px solid rgba(0, 245, 255, 0.65);
+    @include cyber-cube-3d(#3D1668, #260C42, $cosmic-lilac, $cosmic-lilac, $text-aurora);
+    border: 1px solid rgba(0, 255, 204, 0.7);
     box-shadow: 
-      0 4px 0 #030509,
-      0 6px 14px rgba(0, 0, 0, 0.7),
-      0 0 16px rgba(139, 92, 255, 0.45),
-      inset 0 1px 1px rgba(255, 255, 255, 0.3);
+      0 4px 0 #03050C,
+      0 6px 14px rgba(0, 0, 0, 0.75),
+      0 0 16px rgba(192, 132, 252, 0.5),
+      inset 0 1px 1px rgba(255, 255, 255, 0.35);
   }
 
-  // 2048 -> Premium Cyan + Violet Energy Milestone Cube
+  // 2048 -> Premium Aurora Borealis Energy Singularity
   &.tile-2048 {
-    background: linear-gradient(135deg, #0A1C36 0%, #1F103B 50%, #00374D 100%);
-    border: 1.5px solid $neon-cyan;
+    background: linear-gradient(135deg, #072738 0%, #29114D 50%, #053D35 100%);
+    border: 1.5px solid $aurora-teal;
     color: #FFFFFF;
     border-radius: $tile-border-radius;
     position: relative;
@@ -439,8 +442,8 @@
 
     .tile-face-content {
       text-shadow: 
-        0 0 10px rgba(0, 245, 255, 0.9),
-        0 0 20px rgba(139, 92, 255, 0.6);
+        0 0 10px rgba(0, 255, 204, 0.95),
+        0 0 22px rgba(192, 132, 252, 0.7);
     }
 
     &::before {
@@ -450,7 +453,7 @@
       left: 3px;
       right: 3px;
       height: 35%;
-      background: linear-gradient(180deg, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0.02) 100%);
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.55) 0%, rgba(255, 255, 255, 0.02) 100%);
       border-radius: ($tile-border-radius - 2px) ($tile-border-radius - 2px) 3px 3px;
       pointer-events: none;
     }
@@ -468,15 +471,15 @@
     }
   }
 
-  // 4096+ Obsidian Matrix Gold
+  // 4096+ Astral Core Obsidian
   &.tile-super {
-    @include cyber-cube-3d(#14121E, #090810, #FF2BD6, #00F5FF, $neon-cyan);
-    border: 1.5px solid #FF2BD6;
+    @include cyber-cube-3d(#10142A, #080A17, $cosmic-lilac, $aurora-teal, $aurora-teal);
+    border: 1.5px solid $cosmic-lilac;
     box-shadow: 
-      0 4px 0 #050408,
-      0 0 14px rgba(255, 43, 214, 0.35),
-      0 8px 18px rgba(0, 0, 0, 0.8),
-      inset 0 1px 1px rgba(255, 255, 255, 0.25);
+      0 4px 0 #03040A,
+      0 0 16px rgba(192, 132, 252, 0.45),
+      0 8px 18px rgba(0, 0, 0, 0.85),
+      inset 0 1px 1px rgba(255, 255, 255, 0.3);
   }
 }
 
@@ -536,7 +539,7 @@
   padding-top: 4px;
 
   .undo-btn {
-    @include cyber-button($neon-purple, #1A142A, #0F0B1A, $text-purple);
+    @include cyber-button($cosmic-lilac, #1D1232, #10091E, $text-lilac);
     width: 100%;
 
     &.disabled,
@@ -549,7 +552,7 @@
   }
 
   .new-game-btn {
-    @include cyber-button($neon-cyan, #102232, #0A1622, $text-cyan);
+    @include cyber-button($aurora-teal, #0D242C, #07161B, $text-aurora);
     width: 100%;
   }
 }
@@ -573,9 +576,9 @@
     font-size: 0.72rem;
     font-weight: 800;
     letter-spacing: 0.22em;
-    color: $neon-cyan;
-    background: rgba(0, 245, 255, 0.12);
-    border: 1px solid rgba(0, 245, 255, 0.4);
+    color: $aurora-teal;
+    background: rgba(0, 255, 204, 0.12);
+    border: 1px solid rgba(0, 255, 204, 0.4);
     padding: 3px 12px;
     border-radius: 14px;
     margin-bottom: 8px;
@@ -592,10 +595,10 @@
     line-height: 1.1;
 
     &.gold-text {
-      color: $text-cyan;
+      color: $text-aurora;
       text-shadow: 
-        0 0 16px rgba(0, 245, 255, 0.8),
-        0 0 32px rgba(139, 92, 255, 0.4);
+        0 0 16px rgba(0, 255, 204, 0.85),
+        0 0 32px rgba(192, 132, 252, 0.45);
     }
   }
 
@@ -613,14 +616,14 @@
     margin-bottom: 20px;
 
     .stat-item {
-      background: rgba(11, 16, 26, 0.75);
-      border: 1px solid rgba(0, 245, 255, 0.2);
+      background: rgba(8, 14, 28, 0.8);
+      border: 1px solid rgba(0, 255, 204, 0.24);
       border-radius: 10px;
       padding: 8px 16px;
       display: flex;
       flex-direction: column;
       align-items: center;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.6);
 
       .stat-label {
         font-family: $font-label;
@@ -636,7 +639,7 @@
         font-weight: 700;
         color: $text-primary;
         margin-top: 2px;
-        text-shadow: 0 0 6px rgba(0, 245, 255, 0.3);
+        text-shadow: 0 0 6px rgba(0, 255, 204, 0.35);
       }
     }
   }
@@ -652,17 +655,17 @@
       width: 100%;
 
       &.primary-btn {
-        @include cyber-button($neon-cyan, #102538, #0B1927, $text-cyan);
+        @include cyber-button($aurora-teal, #0D2732, #07171E, $text-aurora);
         font-weight: 800;
       }
 
       &.undo-overlay-btn {
-        @include cyber-button($neon-purple, #201738, #140E24, $text-purple);
+        @include cyber-button($cosmic-lilac, #201338, #130B24, $text-lilac);
         font-weight: 800;
       }
 
       &.secondary-btn {
-        @include cyber-button(rgba(255, 255, 255, 0.25), #161B26, #0D1017, $text-secondary);
+        @include cyber-button(rgba(255, 255, 255, 0.25), #121826, #0A0D16, $text-secondary);
       }
     }
   }

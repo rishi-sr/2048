@@ -1,34 +1,47 @@
-// Cyberpunk / Futuristic Neon Color System
+// Deep Space Aurora Futuristic Color System
 
-// 1. Dark Base Palette
-$bg-primary: #05060A;
-$bg-secondary: #0A0D16;
-$surface: #101522;
-$surface-glass: rgba(16, 21, 34, 0.82);
+// 1. Dark Base Palette (Abyss Space Blues & Void)
+$bg-primary: #030712;
+$bg-secondary: #080E1E;
+$surface: #0E172C;
+$surface-glass: rgba(14, 23, 44, 0.85);
 
-$dark: #05060A;
-$dark-surface: #0B0F18;
-$dark-board: #0E131F;
-$board-bg: #0C111D;
-$board-socket: #060911;
-$board-border: rgba(0, 245, 255, 0.26);
+$dark: #030712;
+$dark-surface: #060B18;
+$dark-board: #0B132B;
+$board-bg: #091024;
+$board-socket: #040816;
+$board-border: rgba(0, 255, 204, 0.28);
+$socket-border: rgba(0, 255, 204, 0.24);
 
-// 2. High-Tech Neon Accents (Dominant: Cyan & Electric Blue; Secondary: Purple & Magenta)
-$neon-cyan: #00F5FF;
-$neon-cyan-dim: #00B4BD;
-$electric-blue: #2979FF;
-$electric-blue-glow: #1A5BD6;
-$neon-purple: #8B5CFF;
-$neon-magenta: #FF2BD6;
-$neon-pink: #FF1493;
+// 2. High-Tech Neon Accents (Dominant: Aurora Teal & Cosmic Lilac)
+$aurora-teal: #00FFCC;
+$aurora-teal-dim: #00C49D;
+$cosmic-lilac: #C084FC;
+$cosmic-purple: #9333EA;
+$stellar-blue: #38BDF8;
+$deep-cobalt: #3B82F6;
+$nebula-magenta: #E879F9;
+$aurora-rose: #F472B6;
 
-// 3. High-Contrast Cyberpunk Typography Colors
-$text-primary: #F4FBFF;
-$text-secondary: #8EA3B8;
-$text-muted: #546678;
-$text-cyan: #67FFFF;
-$text-purple: #D5BFFF;
-$text-gold: #FFE27A;
+// Cohesive Aliases for Design System & Component Mixins
+$neon-cyan: $aurora-teal;
+$neon-cyan-dim: $aurora-teal-dim;
+$electric-blue: $stellar-blue;
+$electric-blue-glow: #1D4ED8;
+$neon-purple: $cosmic-lilac;
+$neon-magenta: $nebula-magenta;
+$neon-pink: $aurora-rose;
+
+// 3. High-Contrast Aurora Cyberpunk Typography Colors
+$text-primary: #F0FDFA;
+$text-secondary: #94A3B8;
+$text-muted: #475569;
+$text-cyan: #5EEAD4;
+$text-purple: #E9D5FF;
+$text-aurora: #5EEAD4;
+$text-lilac: #E9D5FF;
+$text-gold: #FDE047;
 
 // 4. Futuristic Fonts
 $font-hud: 'Orbitron', 'Rajdhani', -apple-system, sans-serif;
@@ -45,16 +58,17 @@ $gap: 10px;
 
 // 6. Layered High-Tech Shadows & Ambient Lighting
 $shadow-board-glow: 
-  0 0 1px rgba(0, 245, 255, 0.6),
-  0 0 16px rgba(0, 245, 255, 0.12),
-  0 12px 36px rgba(0, 0, 0, 0.7);
+  0 0 1px rgba(0, 255, 204, 0.65),
+  0 0 16px rgba(0, 255, 204, 0.14),
+  0 0 32px rgba(192, 132, 252, 0.08),
+  0 12px 36px rgba(0, 0, 0, 0.75);
 
 $shadow-recessed-board: 
-  inset 0 4px 14px rgba(0, 0, 0, 0.8),
+  inset 0 4px 14px rgba(0, 0, 0, 0.85),
   inset 0 1px 3px rgba(0, 0, 0, 0.9),
-  0 8px 24px rgba(0, 0, 0, 0.65);
+  0 8px 24px rgba(0, 0, 0, 0.7);
 
 $shadow-socket: 
   inset 0 3px 6px rgba(0, 0, 0, 0.85),
   inset 0 1px 2px rgba(0, 0, 0, 0.9),
-  0 0 1px rgba(0, 245, 255, 0.08);
+  0 0 2px rgba(0, 255, 204, 0.14);
